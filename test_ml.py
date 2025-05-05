@@ -1,28 +1,36 @@
 import pytest
-# TODO: add necessary import
+from ml.model import load_model
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
 
-# TODO: implement the first test. Change the function name and input as needed
-def test_one():
+def test_check_model_algorithm():
     """
-    # add description for the first test
+    Check to ensure the model is using the RandomForestClassifier
+    algorithm
     """
-    # Your code here
-    pass
+    model = load_model("./model/model.pkl")
+    assert isinstance(model, RandomForestClassifier)
 
 
 # TODO: implement the second test. Change the function name and input as needed
-def test_two():
+def test_all_data_used():
     """
     # add description for the second test
     """
-    # Your code here
-    pass
+    data = pd.read_csv("./data/census.csv")
+    training_data, test_data = train_test_split(data, test_size=.2, random_state=42)
+    training_data_shape = training_data.shape[0]
+    test_data_shape = test_data.shape[0]
+    assert (data.shape[0] - training_data_shape - test_data_shape) == 0
 
 
 # TODO: implement the third test. Change the function name and input as needed
-def test_three():
+def test_check_test_split_data_types():
     """
     # add description for the third test
     """
-    # Your code here
-    pass
+    data = pd.read_csv("./data/census.csv")
+    training_data, test_data = train_test_split(data, test_size=.2, random_state=42)
+    assert isinstance(training_data, pd.DataFrame)
+    assert isinstance(test_data, pd.DataFrame)
